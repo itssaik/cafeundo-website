@@ -1,65 +1,14 @@
-const products = [
-  {id:"P010",name:"Chocolate Cake",detail:"Milk chocolate sauce",category:"Cakes",price:129,size:"120G",image:"https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80",tag:"A CLASSIC"},
-  {id:"P013",name:"Milk Tres Leches",detail:"Soft, soaked & silky",category:"Cakes",price:159,size:"140G",image:"https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=900&q=80",tag:"SIGNATURE"},
-  {id:"P004",name:"Brownie Piece",detail:"Deep, fudgy chocolate",category:"Brownies",price:89,size:"70G",image:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80",tag:"FUDGY"},
-  {id:"P008",name:"Brownie Drench",detail:"Brownie-inspired shake",category:"Shakes",price:89,size:"180ML",image:"https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=900&q=80",tag:"SIP SLOW"},
-  {id:"P007",name:"Rose Royale",detail:"A rose-kissed favourite",category:"Shakes",price:69,size:"180ML",image:"https://images.unsplash.com/photo-1553787499-6f913324f3d3?auto=format&fit=crop&w=900&q=80",tag:"A LITTLE FLORAL"},
-  {id:"P018",name:"Korean Cheese Bun",detail:"Golden, soft & cheesy",category:"Buns",price:139,size:"1 PIECE",image:"https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80",tag:"WARM & COMFORTING"},
-  {id:"P019",name:"Brownie Tub",detail:"Triple chocolate layers",category:"Tubs",price:219,size:"1 TUB",image:"https://images.unsplash.com/photo-1564355808539-22fda35bed7e?auto=format&fit=crop&w=900&q=80",tag:"SPOON HAPPINESS"},
-  {id:"P020",name:"Choco Cake Blast",detail:"A whole lot of chocolate",category:"Tubs",price:289,size:"1 TUB",image:"https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=900&q=80",tag:"GO ALL IN"},
-  {id:"P021",name:"Brownie Blast",detail:"For the serious chocolate days",category:"Tubs",price:319,size:"1 TUB",image:"https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=900&q=80",tag:"THE BIG CRAVING"}
-];
-
-const grid = document.getElementById("productGrid");
-const count = document.getElementById("menuCount");
-const formatPrice = value => `₹${value}`;
-
-function renderProducts(category = "All") {
-  const shown = category === "All" ? products : products.filter(p => p.category === category);
-  count.textContent = `${String(shown.length).padStart(2,"0")} CRAVINGS TO EXPLORE`;
-  grid.innerHTML = shown.map((p,i) => `
-    <article class="product-card" style="animation-delay:${i*55}ms">
-      <div class="product-photo">
-        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#bda58e,#5b3929)'">
-        <span class="product-index">${p.id} / ${p.tag}</span>
-        <button class="product-add" type="button" aria-label="Ask about ${p.name}" data-product="${p.id}">+</button>
-      </div>
-      <div class="product-meta">
-        <div><h3>${p.name}</h3><p>${p.detail}</p><div class="product-size">${p.size}</div></div>
-        <span class="product-price">${formatPrice(p.price)}</span>
-      </div>
-    </article>`).join("");
-}
-
-document.getElementById("categoryRow").addEventListener("click", event => {
-  const button = event.target.closest("button[data-category]");
-  if (!button) return;
-  document.querySelectorAll(".category").forEach(el => el.classList.toggle("active", el === button));
-  renderProducts(button.dataset.category);
-});
-
-grid.addEventListener("click", event => {
-  const button = event.target.closest("[data-product]");
-  if (!button) return;
-  const product = products.find(p => p.id === button.dataset.product);
-  if (!product) return;
-  const message = `Hi UNDO! I'd like to know more about ${product.name} (${formatPrice(product.price)}).`;
-  window.open(`https://wa.me/917448434744?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
-});
-
-const menuToggle = document.getElementById("menuToggle");
-const mobileNav = document.getElementById("mobileNav");
-menuToggle.addEventListener("click", () => {
-  const isOpen = mobileNav.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
-});
-mobileNav.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
-  mobileNav.classList.remove("open");
-  menuToggle.setAttribute("aria-expanded","false");
-}));
-
-document.getElementById("year").textContent = new Date().getFullYear();
-window.addEventListener("load", () => {
-  window.setTimeout(() => document.getElementById("loader").classList.add("done"), 500);
-});
-renderProducts();
+const items=[
+{name:"Rose Royale (Shake)",price:69,category:"Shakes",desc:"Chennai's favourite rose milk, shaken thick, creamy and ice-cold.",image:"https://undo-preview.vercel.app/products/rose-royale-cutout.webp",label:"A LITTLE FLORAL"},
+{name:"Brownie Drench (Shake)",price:99,category:"Shakes",desc:"A whole fudgy brownie blended into cold, thick chocolate milk.",image:"https://undo-preview.vercel.app/products/brownie-drench-cutout.webp",label:"CHOCOLATE"},
+{name:"Rose Milk Très Lèches",price:159,category:"Cakes",desc:"Rose-soaked sponge, rose cream and pistachio.",image:"https://undo-preview.vercel.app/products/rose-milk-tres-leches.webp",label:"SIGNATURE"},
+{name:"Triple Chocolate Cake",price:129,category:"Cakes",desc:"Dark sponge, chocolate mousse and white chocolate cream under glossy ganache.",image:"https://undo-preview.vercel.app/products/triple-chocolate-cake.webp",label:"TRIPLE CHOCOLATE"},
+{name:"Khoa Infused Bun",price:99,category:"Buns",desc:"Soft, buttery pull-apart bun with khoa, saffron and pistachio.",image:"https://undo-preview.vercel.app/products/khoa-infused-bun.webp",label:"CHENNAI MEETS SEOUL"},
+{name:"Korean Cheese Bun",price:139,category:"Buns",desc:"Soft pull-apart wedges filled with cream cheese, dusted with cocoa.",image:"https://undo-preview.vercel.app/products/korean-cheese-bun.webp",label:"A CUSTOMER FAVOURITE"},
+{name:"Triple Choco Cake Tub",price:189,category:"Tubs",desc:"Chocolate sponge, ganache and fudge sauce, layered deep in a tub.",image:"https://undo-preview.vercel.app/products/triple-choco-cake-tub.webp",label:"SPOON HAPPINESS"},
+{name:"Triple Choco Brownie Tub",price:219,category:"Tubs",desc:"Fudgy brownie chunks, chocolate chips and warm chocolate sauce.",image:"https://undo-preview.vercel.app/products/triple-choco-brownie-tub.webp",label:"THE BIG CRAVING"}];
+const grid=document.getElementById("menuGrid");
+function orderLink(name){return "https://wa.me/917448434744?text="+encodeURIComponent("Hi UNDO, I'd like to order "+name+".")}
+function render(filter="All"){const visible=filter==="All"?items:items.filter(x=>x.category===filter);grid.innerHTML=visible.map((x,i)=>`<article class="menu-item" style="animation-delay:${i*35}ms"><div class="menu-item-img"><img src="${x.image}" alt="${x.name}" loading="lazy" onerror="this.style.opacity='.15'"></div><div class="menu-item-info"><div><h3>${x.name}</h3><strong>₹${x.price}</strong></div><p>${x.desc}</p><a href="${orderLink(x.name)}" target="_blank" rel="noreferrer">Order on WhatsApp <span>↗</span></a></div></article>`).join("")}
+document.getElementById("filters").addEventListener("click",e=>{const b=e.target.closest("[data-filter]");if(!b)return;document.querySelectorAll(".filter").forEach(x=>x.classList.toggle("active",x===b));render(b.dataset.filter)});
+const hamburger=document.getElementById("hamburger"),mobile=document.getElementById("mobileNav");hamburger.addEventListener("click",()=>mobile.classList.toggle("open"));mobile.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>mobile.classList.remove("open")));document.getElementById("year").textContent=new Date().getFullYear();render();
